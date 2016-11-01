@@ -1,0 +1,109 @@
+    <html>
+      <head>
+        <style>
+     
+        </style>
+        <script>
+          document.addEventListener("DOMContentLoaded", function() {
+            chrome.management.getAll(getAllCallback);
+          });
+          
+          var getAllCallback = function(list) {
+            var apps = document.getElementById("apps");
+            for(var i in list) {
+              // we don't want to do anything with extensions yet.
+              var extInf = list[i];
+              if(extInf.isApp && extInf.enabled) {
+                var app = document.createElement("div");
+     
+                var img = new Image();
+                img.className = "image";
+                img.src = find128Image(extInf.icons);
+                img.addEventListener("click", (function(ext) {
+                  return function() {
+                    chrome.management.launchApp(ext.id);
+                  };
+                })(extInf));
+      
+                var name = document.createElement("div");
+                name.className = "name";
+                name.textContent = extInf.name;
+      
+                app.className = "app";
+                app.appendChild(img);
+                app.appendChild(name);
+                apps.appendChild(app);
+              }
+            }
+          };
+
+          var find128Image = function(icons) {
+            for(var icon in icons) {
+              if(icons[icon].size == "128") {
+                return icons[icon].url;
+              }
+            }
+  
+            return "/noicon.png";
+          };
+         
+        </script>
+         
+  
+
+
+      </head>
+      <body>
+        <div id="apps">
+         
+        <!-- <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-4" data-clearing>
+             
+  <li class="planet-cards" ng-repeat="shots in planetinfo.planetShots">
+      
+      <a ng-href="{{ shots.screenshot }}">
+          <img data-caption="{{ shots.planetname | uppercase }}" ng-src="{{ shots.screenshot }}">
+      <h4 class="planet-title">{{ shots.planetname | uppercase }}</h4>
+      </a>
+             </li>
+             </ul>-->
+
+        </div>
+             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+          <script>
+   //nytimes api code fetch articles based on date
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1;
+            var yyyy100ago = today.getFullYear()-100;
+            
+            if(dd<10){
+                dd='0' +dd
+                
+            }
+            
+            if(mm<10) {
+                mm='0' +mm
+            }
+            
+            
+            var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+            url += '?' + $.param({
+              'api-key': "833111633c38759759b03085bf194a67:18:68450732",
+              'begin_date': yyyy100ago + mm + dd,
+              'end_date': yyyy100ago + mm + dd
+            });
+            $.ajax({
+              url: url,
+              method: 'GET',
+            }).done(function(result) {
+            
+              console.log(result);
+            }).fail(function(err) {
+              throw err;
+            });
+
+            
+            console.log(yyyy100ago + mm + dd);
+</script>
+      </body>
+    </html>

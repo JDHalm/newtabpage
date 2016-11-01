@@ -54,6 +54,7 @@
 
       </head>
       <body>
+          <h1>100 Years Ago Today</h1>
         <div id="apps">
          
         <!-- <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-4" data-clearing>
@@ -72,7 +73,10 @@
           <script>
    //nytimes api code fetch articles based on date
             var today = new Date();
+            console.log(today);  
+            
             var dd = today.getDate();
+             
             var mm = today.getMonth()+1;
             var yyyy100ago = today.getFullYear()-100;
             
@@ -84,26 +88,52 @@
             if(mm<10) {
                 mm='0' +mm
             }
-            
+              
+               console.log(dd);
+              console.log(mm);
+              console.log(yyyy100ago);
+                    
+            console.log(('' + yyyy100ago) + (''+ mm) + (''+ dd));
             
             var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
             url += '?' + $.param({
               'api-key': "833111633c38759759b03085bf194a67:18:68450732",
-              'begin_date': yyyy100ago + mm + dd,
-              'end_date': yyyy100ago + mm + dd
+              'begin_date': ('' + yyyy100ago) + (''+ mm) + (''+ dd),
+              'end_date': ('' + yyyy100ago) + (''+ mm) + (''+ dd)
             });
+              
             $.ajax({
               url: url,
               method: 'GET',
             }).done(function(result) {
             
+                var arraylength = result.response.docs.length;
+                
               console.log(result);
+                for (i = 0; i < arraylength; i++){
+                    if(result.response.docs[i].type_of_material == "Front Page"){
+                    var articles = document.createElement("div");
+                    var link = articles.appendChild(document.createElement("a"));
+                    var description = articles.appendChild(document.createElement("p"));
+                    link.href = result.response.docs[i].web_url;
+                    link.innerHTML = result.response.docs[i].headline.main + "<br>";
+                        if(result.response.docs[i].lead_paragraph == null ){
+                            description.innerHTML = "This articles has no first paragraph!"
+                        } else {
+                    description.innerHTML = result.response.docs[i].lead_paragraph;}
+                    articles.className = 'article';
+                    
+                    document.body.appendChild(articles);}
+               }
+               //  document.getElementById("apps").innerHTML = result.response.docs[i].headline.main;}
             }).fail(function(err) {
               throw err;
             });
 
-            
-            console.log(yyyy100ago + mm + dd);
+           
+       
+                
+        
 </script>
       </body>
     </html>

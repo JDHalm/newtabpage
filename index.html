@@ -2,10 +2,15 @@
       <head>
           <link rel="stylesheet" href="
 https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.css">
-          <link href="https://fonts.googleapis.com/css?family=Oswald:700|Trirong" rel="stylesheet">
+          <link href="https://fonts.googleapis.com/css?family=Oswald:700|Roboto+Slab:300,400,700" rel="stylesheet">
         <style>
             h1 {font-family: 'Oswald' , sans-serif;}
-            p,a,li{font-family: 'Trirong', serif;}
+            h2 {font-family: 'Roboto Slab', serif;
+            font-weight: 700;}
+          p, a,li{font-family: 'Roboto Slab', serif;}
+            p{font-weight: 300;}
+    
+        
         </style>
         <script>
           document.addEventListener("DOMContentLoaded", function() {
@@ -60,6 +65,7 @@ https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.css">
       <body>
           <div class="row">
           <h1>100 YEARS AGO TODAY</h1>
+              <h2 id="todaysDate"></h2>
         <div id="apps">
          
    
@@ -72,6 +78,11 @@ https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.css">
    //nytimes api code fetch articles based on date
             var today = new Date();
             console.log(today);  
+              
+           var monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+                            ];
+              var monthNameFull = monthNames[today.getMonth()];
             
             var dd = today.getDate();
              
@@ -92,6 +103,8 @@ https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.css">
               console.log(yyyy100ago);
                     
             console.log(('' + yyyy100ago) + (''+ mm) + (''+ dd));
+              
+            document.getElementById("todaysDate").innerHTML = monthNameFull + " " + dd + ", " + yyyy100ago;
             
             var url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
             url += '?' + $.param({
@@ -116,15 +129,15 @@ https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.css">
                     link.href = result.response.docs[i].web_url;
                     link.target = "_blank";
                     link.innerHTML = result.response.docs[i].headline.main;
-                        if(result.response.docs[i].lead_paragraph == null ){
-                            description.innerHTML = "This articles has no first paragraph!"
+                        if(result.response.docs[i].snippet == null ){
+                            description.innerHTML = "This articles has no summary!"
                         } else {
-                    description.innerHTML = result.response.docs[i].lead_paragraph;}
+                    description.innerHTML = result.response.docs[i].snippet;}
                     articles.className = 'article';
                     
                     document.getElementById("apps").appendChild(articles);}
                }
-               //  document.getElementById("apps").innerHTML = result.response.docs[i].headline.main;}
+             
             }).fail(function(err) {
               throw err;
             });

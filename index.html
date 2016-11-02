@@ -119,14 +119,23 @@ https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.css">
             }).done(function(result) {
             
                 var arraylength = result.response.docs.length;
+               
+                
                 
               console.log(result);
                 for (i = 0; i < arraylength; i++){
+                  
+                    
                     if(result.response.docs[i].type_of_material == "Front Page"){
+                          var pathArray = result.response.docs[i].web_url.split( '=');
+                    
+                    console.log(pathArray[1]);
+                        
+                        
                     var articles = document.createElement("div");
                     var link = articles.appendChild(document.createElement("a"));
                     var description = articles.appendChild(document.createElement("p"));
-                    link.href = result.response.docs[i].web_url;
+                    link.href = "http://query.nytimes.com/mem/archive-free/pdf?res=" + pathArray[1];
                     link.target = "_blank";
                     link.innerHTML = result.response.docs[i].headline.main;
                         if(result.response.docs[i].snippet == null ){

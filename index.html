@@ -1,7 +1,11 @@
     <html>
       <head>
+          <link rel="stylesheet" href="
+https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.css">
+          <link href="https://fonts.googleapis.com/css?family=Oswald:700|Trirong" rel="stylesheet">
         <style>
-     
+            h1 {font-family: 'Oswald' , sans-serif;}
+            p,a,li{font-family: 'Trirong', serif;}
         </style>
         <script>
           document.addEventListener("DOMContentLoaded", function() {
@@ -54,22 +58,16 @@
 
       </head>
       <body>
-          <h1>100 Years Ago Today</h1>
+          <div class="row">
+          <h1>100 YEARS AGO TODAY</h1>
         <div id="apps">
          
-        <!-- <ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-4" data-clearing>
-             
-  <li class="planet-cards" ng-repeat="shots in planetinfo.planetShots">
-      
-      <a ng-href="{{ shots.screenshot }}">
-          <img data-caption="{{ shots.planetname | uppercase }}" ng-src="{{ shots.screenshot }}">
-      <h4 class="planet-title">{{ shots.planetname | uppercase }}</h4>
-      </a>
-             </li>
-             </ul>-->
+   
 
         </div>
+              </div>
              <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/js/foundation.min.js"></script>
           <script>
    //nytimes api code fetch articles based on date
             var today = new Date();
@@ -116,14 +114,15 @@
                     var link = articles.appendChild(document.createElement("a"));
                     var description = articles.appendChild(document.createElement("p"));
                     link.href = result.response.docs[i].web_url;
-                    link.innerHTML = result.response.docs[i].headline.main + "<br>";
+                    link.target = "_blank";
+                    link.innerHTML = result.response.docs[i].headline.main;
                         if(result.response.docs[i].lead_paragraph == null ){
                             description.innerHTML = "This articles has no first paragraph!"
                         } else {
                     description.innerHTML = result.response.docs[i].lead_paragraph;}
                     articles.className = 'article';
                     
-                    document.body.appendChild(articles);}
+                    document.getElementById("apps").appendChild(articles);}
                }
                //  document.getElementById("apps").innerHTML = result.response.docs[i].headline.main;}
             }).fail(function(err) {

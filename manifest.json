@@ -1,9 +1,9 @@
 {
-    "name": "The New App Launcher",
-    "description": "Launches apps, the good way!",
+    "name": "100 Years Ago Today",
+    "description": "Read news from 100 years ago",
     "version": "0.0.0.1",
     "permissions" : ["management"],
     "chrome_url_overrides" : {
-        "newtab": "newtab.html"
+        "newtab": "index.html"
     }
 }
